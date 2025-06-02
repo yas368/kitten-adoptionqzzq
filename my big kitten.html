@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Moving Kitten!</title>
+    <style>
+        body {
+            background:#FFC0CB;
+            overflow: hidden;
+            margin: 0;
+            height: 100vh;
+                    }
+        #kitten {
+            position: absolute;
+            width: 400px;
+            transition: left 0.7s linear, top 0.7s linear;
+            cursor: pointer;
+            border-radius: 50px;
+            clip-path: ellipse(45% 45% at 50% 50%);
+        }
+        #page-title { position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Lucida Handwriting', cursive;
+            font-size: 2.5em;
+            color: #e4f522;
+            margin: 0;
+            user-select:auto;
+            }
+        #sous-page-title{ position: absolute;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Lucida Handwriting', cursive;
+            font-size: 1.2em;
+            color: #FF0000;
+            margin: 0;
+            user-select: auto;
+        }
+         #sous-sous-page-title{
+            position: absolute;
+            top: 140px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Lucida Handwriting', cursive;
+            font-size: 1.2em;
+            color: #000000;
+            margin: 0;
+            user-select: auto;
+            z-index: 1000;
+        }
+
+
+        .rain {
+  pointer-events: none; /* So it doesn't block clicks */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.drop {
+  position: absolute;
+  bottom: 100%;
+  width: 2.5px;
+  height: 15px;
+  background: #9ecfff;
+  opacity: 2.5;
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh);
+  }
+}
+    </style>
+</head>
+<body>
+    <img id="kitten" src="Kitten.png" alt="Huge Kitten">
+    <h1 id="page-title">MEOW MEOW LALA SANAA !</h1>
+    <h2 id="sous-page-title">PLEASE JIBINI LDARE 3ANDKOUM</h2>
+    <h3 id="sous-sous-page-title">Kin lBERD da5linii 3afaaak</h3>
+    <audio id="meow-sound" src="audio.mp3"></audio>
+    <div class="rain "></div>
+    <script>
+        const kitten = document.getElementById("kitten");
+        const meowsound= document.getElementById("meow-sound");
+
+        function moveKitten() {
+            const maxX = window.innerWidth - kitten.offsetWidth;
+            const maxY = window.innerHeight - kitten.offsetHeight;
+            const randX = Math.random() * maxX;
+            const randY = Math.random() * maxY;
+            kitten.style.left = randX + "px";
+            kitten.style.top = randY + "px";
+        }
+        setInterval(moveKitten, 1000);
+        kitten.addEventListener('click', () => {
+    meowsound.currentTime = 0;
+    meowsound.play();
+    moveKitten();
+    });
+
+  const rainContainer = document.querySelector('.rain');
+  const dropsCount = 100;
+
+  for (let i = 0; i < dropsCount; i++) {
+    const drop = document.createElement('div');
+    drop.classList.add('drop');
+    drop.style.left = Math.random() * 100 + 'vw';
+    drop.style.animationDuration = (Math.random() * 1.5 + 0.5) + 's';
+    drop.style.animationDelay = Math.random() * 2 + 's';
+    rainContainer.appendChild(drop);
+  }
+     window.onload = moveKitten;
+    </script>
+</body>
+</html>
